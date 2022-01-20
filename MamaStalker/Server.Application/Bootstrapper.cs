@@ -20,10 +20,14 @@ namespace Server.Application
         {
             IServerFactory serverFactory = new TcpServerFactory();
             IOutput<string> writer = new ConsoleWriter();
-            int port = 0;
-            if(_args.Length != 1 || !int.TryParse(_args[0], out port) || port < _minPort || port > _maxPort)
+
+            if (_args.Length != 2
+                || !int.TryParse(_args[0], out int port)
+                || port < _minPort || port > _maxPort
+                || !int.TryParse(_args[1], out int refreshInterval)
+                || refreshInterval < 0)
             {
-                writer.WriteLine("Invalid port entered");
+                writer.WriteLine("Invalid arguments entered");
                 return null;
             }
             NotifyException notifyException = new NotifyException(writer);

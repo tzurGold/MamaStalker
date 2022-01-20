@@ -9,6 +9,13 @@ namespace Server.BLL.Implementations
 {
     public class TcpServerAction : IAction
     {
+        private readonly int _refreshInterval;
+
+        public TcpServerAction(int refreshInterval)
+        {
+            _refreshInterval = refreshInterval;
+        }
+
         public void Execute(IConnectedClient connectedClient)
         {
             try
