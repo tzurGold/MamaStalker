@@ -5,10 +5,12 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
+
 namespace Server.BLL.Implementations
 {
     public class TcpServerAction : IAction
     {
+
         private readonly int _refreshInterval;
 
         public TcpServerAction(int refreshInterval)

@@ -31,7 +31,7 @@ namespace Server.Application
                 return null;
             }
             NotifyException notifyException = new NotifyException(writer);
-            IAction action = new TcpServerAction();
+            IAction action = new TcpServerAction(refreshInterval);
             return serverFactory.CreateServer(port, notifyException, action); 
         }
     }

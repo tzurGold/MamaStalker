@@ -12,8 +12,11 @@ namespace Client.BLL.Implementations
     {
         private TcpClient _client;
 
-        public TcpClientManager(int port, string ip, NotifyException notifyException) 
-            : base(port, ip, notifyException)
+        public TcpClientManager(int port,
+            string ip,
+            NotifyException notifyException,
+            IAction action) 
+            : base(port, ip, notifyException, action)
         {
             _client = new TcpClient();
         }
@@ -32,7 +35,7 @@ namespace Client.BLL.Implementations
 
                     Person p = (Person)formatter.Deserialize(stream);
 
-                    Console.WriteLine("Received: {0}", p);
+                    _action.DoAction();
                 }
             }
             catch (Exception e)

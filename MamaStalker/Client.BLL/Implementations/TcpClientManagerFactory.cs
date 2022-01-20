@@ -5,9 +5,9 @@ namespace Client.BLL.Implementations
 {
     public class TcpClientManagerFactory : IClientFactory
     {
-        public ClientBase CreateClient(int port, string ip, NotifyException notifyException)
+        public ClientBase CreateClient(int port, string ip, NotifyException notifyException, IAction action)
         {
-            return new TcpClientManager(port, ip, notifyException);
+            return new TcpClientManager(port, ip, notifyException, action);
         }
     }
 }

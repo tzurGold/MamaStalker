@@ -11,11 +11,17 @@ namespace Client.BLL.Abstractions
 
         protected readonly NotifyException _notifyException;
 
-        public ClientBase(int port, string ip, NotifyException notifyException)
+        protected readonly IAction _action;
+
+        public ClientBase(int port,
+            string ip,
+            NotifyException notifyException,
+            IAction action)
         {
             Port = port;
             Ip = ip;
             _notifyException = notifyException;
+            _action = action;
         }
 
         public abstract void Connect();
