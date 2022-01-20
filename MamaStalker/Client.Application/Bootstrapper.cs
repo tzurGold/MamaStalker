@@ -1,5 +1,6 @@
 ﻿using Client.BLL.Abstractions;
 using Client.BLL.Implementations;
+using Common;
 using UI.Abstractions;
 using UI.Implementations;
 
@@ -25,7 +26,7 @@ namespace Client.Application
                 ip = input.Substring(0, input.IndexOf(":"));
                 port = int.Parse(input.Substring(input.IndexOf(":") + 1));
             }
-            IAction action = new ClientAction();
+            IAction action = new ClientAction(new Parser());
             return clientFactory.CreateClient(port, ip, notifyException, action); 
         }
     }

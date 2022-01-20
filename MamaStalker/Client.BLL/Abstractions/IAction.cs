@@ -2,6 +2,6 @@
 {
     public interface IAction
     {
-        void DoAction();
+        void DoAction(byte[] data);
     }
 }

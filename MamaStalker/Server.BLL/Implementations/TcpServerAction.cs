@@ -1,10 +1,6 @@
 ﻿using Common;
 using Server.BLL.Abstraction;
-using System;
 using System.Drawing;
-using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Windows.Forms;
 using Point = System.Drawing.Point;

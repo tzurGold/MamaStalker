@@ -1,5 +1,4 @@
 ﻿using Client.BLL.Abstractions;
-using Common.DTOs;
 using System;
 using System.Net.Sockets;
 using System.Runtime.Serialization;
@@ -26,16 +25,14 @@ namespace Client.BLL.Implementations
             IFormatter formatter = new BinaryFormatter();
             NetworkStream stream = null;
             try
-            { 
+            {
                 stream = _client.GetStream();
 
-                while(true)
+                while (true)
                 {
-                    formatter.Serialize(stream, GetPerson());
-
-                    Person p = (Person)formatter.Deserialize(stream);
-
-                    _action.DoAction();
+                    byte[] bytes = new byte[1024];
+                    stream.Read(bytes, 0, bytes.Length);
+                    _action.DoAction(bytes);
                 }
             }
             catch (Exception e)
@@ -46,14 +43,6 @@ namespace Client.BLL.Implementations
             {
                 stream.Close();
             }
-        }
-
-        private Person GetPerson()
-        {
-            Console.WriteLine("Enter name:age");
-            string input = Console.ReadLine();
-            return new Person(input.Substring(0, input.IndexOf(":")), 
-                int.Parse(input.Substring(input.IndexOf(":") + 1)));
         }
 
         public override void Connect()
