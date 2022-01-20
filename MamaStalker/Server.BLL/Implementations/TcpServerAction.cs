@@ -1,9 +1,14 @@
-﻿using Common.DTOs;
+﻿using Common;
 using Server.BLL.Abstraction;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading;
+using System.Windows.Forms;
+using Point = System.Drawing.Point;
+using Rectangle = System.Drawing.Rectangle;
 
 
 namespace Server.BLL.Implementations
@@ -12,36 +17,31 @@ namespace Server.BLL.Implementations
     {
 
         private readonly int _refreshInterval;
+        private readonly Parser _parser;
 
-        public TcpServerAction(int refreshInterval)
+        public TcpServerAction(int refreshInterval, Parser parser)
         {
             _refreshInterval = refreshInterval;
+            _parser = parser;
         }
 
         public void Execute(IConnectedClient connectedClient)
         {
-            try
+            while (true)
             {
-                while (true)
-                {
-                    IFormatter formatter = new BinaryFormatter();
-                    MemoryStream memoryStream = new MemoryStream();
-                    byte[] data = connectedClient.Receive();
-                    memoryStream.Write(data, 0, data.Length);
-                    memoryStream.Seek(0, SeekOrigin.Begin);
-                    Person p = (Person)formatter.Deserialize(memoryStream);
-                    Console.WriteLine(p);
+                Rectangle bounds = Screen.GetBounds(Point.Empty);
 
-                    memoryStream = new MemoryStream();
-                    formatter.Serialize(memoryStream, p);
-                    data = memoryStream.ToArray();
-                    connectedClient.Send(data);
+                using (Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height))
+                {
+                    using (Graphics g = Graphics.FromImage(bitmap))
+                    {
+                        g.CopyFromScreen(Point.Empty, Point.Empty, bounds.Size);
+                    }
+                    connectedClient.Send(_parser.ObjectToByteArray(bitmap));
                 }
+                Thread.Sleep(_refreshInterval);
             }
-            catch (Exception e)
-            {
-                throw;
-            }
+
         }
     }
 }

@@ -25,7 +25,8 @@ namespace Client.Application
                 ip = input.Substring(0, input.IndexOf(":"));
                 port = int.Parse(input.Substring(input.IndexOf(":") + 1));
             }
-            return clientFactory.CreateClient(port, ip, notifyException); 
+            IAction action = new ClientAction();
+            return clientFactory.CreateClient(port, ip, notifyException, action); 
         }
     }
 }

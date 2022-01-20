@@ -1,4 +1,5 @@
-﻿using Server.BLL.Abstraction;
+﻿using Common;
+using Server.BLL.Abstraction;
 using Server.BLL.Implementations;
 using UI.Abstractions;
 using UI.Implementations;
@@ -31,7 +32,7 @@ namespace Server.Application
                 return null;
             }
             NotifyException notifyException = new NotifyException(writer);
-            IAction action = new TcpServerAction(refreshInterval);
+            IAction action = new TcpServerAction(refreshInterval, new Parser());
             return serverFactory.CreateServer(port, notifyException, action); 
         }
     }

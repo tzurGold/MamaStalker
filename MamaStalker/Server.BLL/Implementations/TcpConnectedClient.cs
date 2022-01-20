@@ -1,9 +1,5 @@
-﻿using Common.DTOs;
-using Server.BLL.Abstraction;
-using System.IO;
+﻿using Server.BLL.Abstraction;
 using System.Net.Sockets;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Server.BLL.Implementations
 {
@@ -19,14 +15,9 @@ namespace Server.BLL.Implementations
         public byte[] Receive()
         {
             NetworkStream stream = _client.GetStream();
-            IFormatter formatter = new BinaryFormatter();
-            Person p = (Person)formatter.Deserialize(stream);
-            BinaryFormatter bf = new BinaryFormatter();
-            using (var ms = new MemoryStream())
-            {
-                bf.Serialize(ms, p);
-                return ms.ToArray();
-            }
+            byte[] data = new byte[1024];
+            stream.Read(data, 0, data.Length);
+            return data;
         }
 
         public void Send(byte[] data)
