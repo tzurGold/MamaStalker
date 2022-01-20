@@ -8,11 +8,11 @@ using UI.Implementations;
 
 namespace Client.BLL.Implementations
 {
-    public class PingPongTcpClient : ClientBase
+    public class TcpClientManager : ClientBase
     {
         private TcpClient _client;
 
-        public PingPongTcpClient(int port, string ip, NotifyException notifyException) 
+        public TcpClientManager(int port, string ip, NotifyException notifyException) 
             : base(port, ip, notifyException)
         {
             _client = new TcpClient();

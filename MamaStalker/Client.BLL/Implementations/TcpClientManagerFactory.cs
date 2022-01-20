@@ -3,7 +3,7 @@ using UI.Implementations;
 
 namespace Client.BLL.Implementations
 {
-    public class TcpClientFactory : IClientFactory
+    public class TcpClientManagerFactory : IClientFactory
     {
         public ClientBase CreateClient(int port, string ip, NotifyException notifyException)
         {
